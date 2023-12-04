@@ -41,6 +41,25 @@ namespace Paint
         
         Brush AllBrush;
 
+
+        private ButtonKeyHandler BKH = new ButtonKeyHandler();
+
+        public void canvas_KeyDown(object sender, KeyEventArgs e)
+        {
+            var TempCanvass = MyCanvas.Children.Cast<UIElement>().ToArray();
+
+            if (e.Key == Key.Z && e.KeyboardDevice.Modifiers == ModifierKeys.Control)
+            {
+                BKH.canvas_KeyDown_Z(sender, e, MyCanvas, TempCanvass);
+            }
+            if (e.Key == Key.Y && e.KeyboardDevice.Modifiers == ModifierKeys.Control)
+            {
+                BKH.canvas_KeyDown_Y(sender, e, MyCanvas, TempCanvass);
+
+            }
+        }
+
+
         // по сути выбор цвета тут
         private void ChangeColor()
         {

@@ -75,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="model\2_DOblick.cs" />
+    <Compile Include="model\ButtonKeyHandler.cs" />
     <Compile Include="model\Circle.cs" />
     <Compile Include="Enum\enum.cs" />
     <Compile Include="model\Line.cs" />
