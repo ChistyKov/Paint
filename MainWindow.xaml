@@ -41,6 +41,7 @@
             <Button x:Name="Rectangle" Content="Rectangle" Click="Rectangle_click"  Margin="3" Padding="3"/>
             <Button x:Name="Polygon" Content="Polygon" Click="Polygon_click"  Margin="3" Padding="3"/>
             <Button x:Name="Paint" Content="Paint" Click="Paint_click"  Margin="3" Padding="3"/>
+            <Button x:Name="Cursor" Content="Cursor" Click="Cursor_click"  Margin="3" Padding="3"/>
 
         </StackPanel>
 

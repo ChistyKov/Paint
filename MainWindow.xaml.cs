@@ -205,8 +205,14 @@ namespace Paint
             button = true;
         }
 
+        private void Cursor_click(object sender, RoutedEventArgs e)
+        {
+            Draw = false;
+            button = false;
+        }
+
         #region Drawning
-        
+
 
         bool IsDrawning = false;
         
