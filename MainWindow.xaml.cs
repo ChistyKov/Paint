@@ -14,6 +14,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Win32;
+using System.IO;
+
 
 namespace Paint
 {
@@ -40,6 +43,47 @@ namespace Paint
         AllOblicks AllOblick;
         
         Brush AllBrush;
+
+        private SaveFileDialog saveFileDialog = new SaveFileDialog();
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            int width = (int)Math.Ceiling(MyCanvas.ActualWidth);
+            int height = (int)Math.Ceiling(MyCanvas.ActualHeight);
+
+            // Create a bitmap image from the visual tree of the canvas
+            RenderTargetBitmap renderBitmap = new RenderTargetBitmap(
+                width, height, 96, 96, System.Windows.Media.PixelFormats.Pbgra32);
+            renderBitmap.Render(MyCanvas);
+
+            // Create a PNG encoder and save the bitmap to a file
+            PngBitmapEncoder pngEncoder = new PngBitmapEncoder();
+            pngEncoder.Frames.Add(BitmapFrame.Create(renderBitmap));
+
+            using (FileStream fileStream = new FileStream("canvas.png", FileMode.Create))
+            {
+                pngEncoder.Save(fileStream);
+            }
+        }
+
+
+        private ButtonKeyHandler BKH = new ButtonKeyHandler();
+        
+        public void canvas_KeyDown(object sender, KeyEventArgs e)
+        {
+            var TempCanvass = MyCanvas.Children.Cast<UIElement>().ToArray();
+
+            if (e.Key == Key.Z && e.KeyboardDevice.Modifiers == ModifierKeys.Control)
+            {
+                BKH.canvas_KeyDown_Z(sender, e, MyCanvas, TempCanvass);
+            }
+            if (e.Key == Key.Y && e.KeyboardDevice.Modifiers == ModifierKeys.Control)
+            {
+                BKH.canvas_KeyDown_Y(sender, e, MyCanvas);
+
+            }
+        }
+
 
         // по сути выбор цвета тут
         private void ChangeColor()
@@ -78,6 +122,8 @@ namespace Paint
                 if (IsDrawning == true && (sender is Canvas))
                 {
                     CursorPaint.AddFigurePoint(e.GetPosition(MyCanvas));
+                    //Очистка временного канваса
+                    BKH.TempCanvas.Children.Clear();
                 }
                 
 
@@ -91,7 +137,7 @@ namespace Paint
                     Oblick.ShapeUpdeting(2, MyCanvas, Brushes.Black, StartPoint, EndPoint, AllBrush);
                     Oblick.UpdateFiqure();
                 }
-
+                BKH.TempCanvas.Children.Clear();
             }
          
         }
@@ -105,6 +151,7 @@ namespace Paint
                 CursorPaint.AddFigurePoint(e.GetPosition(MyCanvas));
                 Mouse.Capture(null);
                 CursorPaint.EndFigure();
+
 
                 IsDrawning = false;
             }
