@@ -32,7 +32,7 @@
         </Expander>
             </DockPanel>
         </StackPanel>
-
+        <Button x:Name="saveButton" Content="Save As..." Click="SaveButton_Click" Margin="72,0,1000,0" />
         <StackPanel Orientation="Horizontal" Background="DarkGray"  Grid.Row="1">
             
             <Button x:Name="Line" Content="Line" Click="Line_click"  Margin="3" Padding="3"/>
