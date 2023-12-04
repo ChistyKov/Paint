@@ -14,6 +14,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Win32;
+using System.IO;
+
 
 namespace Paint
 {
@@ -41,8 +44,28 @@ namespace Paint
         
         Brush AllBrush;
 
+        private SaveFileDialog saveFileDialog = new SaveFileDialog();
 
-        
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            int width = (int)Math.Ceiling(MyCanvas.ActualWidth);
+            int height = (int)Math.Ceiling(MyCanvas.ActualHeight);
+
+            // Create a bitmap image from the visual tree of the canvas
+            RenderTargetBitmap renderBitmap = new RenderTargetBitmap(
+                width, height, 96, 96, System.Windows.Media.PixelFormats.Pbgra32);
+            renderBitmap.Render(MyCanvas);
+
+            // Create a PNG encoder and save the bitmap to a file
+            PngBitmapEncoder pngEncoder = new PngBitmapEncoder();
+            pngEncoder.Frames.Add(BitmapFrame.Create(renderBitmap));
+
+            using (FileStream fileStream = new FileStream("canvas.png", FileMode.Create))
+            {
+                pngEncoder.Save(fileStream);
+            }
+        }
+
 
         private ButtonKeyHandler BKH = new ButtonKeyHandler();
         
