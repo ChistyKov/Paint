@@ -42,8 +42,10 @@ namespace Paint
         Brush AllBrush;
 
 
-        private ButtonKeyHandler BKH = new ButtonKeyHandler();
+        
 
+        private ButtonKeyHandler BKH = new ButtonKeyHandler();
+        
         public void canvas_KeyDown(object sender, KeyEventArgs e)
         {
             var TempCanvass = MyCanvas.Children.Cast<UIElement>().ToArray();
@@ -54,7 +56,7 @@ namespace Paint
             }
             if (e.Key == Key.Y && e.KeyboardDevice.Modifiers == ModifierKeys.Control)
             {
-                BKH.canvas_KeyDown_Y(sender, e, MyCanvas, TempCanvass);
+                BKH.canvas_KeyDown_Y(sender, e, MyCanvas);
 
             }
         }
@@ -97,6 +99,8 @@ namespace Paint
                 if (IsDrawning == true && (sender is Canvas))
                 {
                     CursorPaint.AddFigurePoint(e.GetPosition(MyCanvas));
+                    //Очистка временного канваса
+                    BKH.TempCanvas.Children.Clear();
                 }
                 
 
@@ -110,7 +114,7 @@ namespace Paint
                     Oblick.ShapeUpdeting(2, MyCanvas, Brushes.Black, StartPoint, EndPoint, AllBrush);
                     Oblick.UpdateFiqure();
                 }
-
+                BKH.TempCanvas.Children.Clear();
             }
          
         }
@@ -124,6 +128,7 @@ namespace Paint
                 CursorPaint.AddFigurePoint(e.GetPosition(MyCanvas));
                 Mouse.Capture(null);
                 CursorPaint.EndFigure();
+
 
                 IsDrawning = false;
             }

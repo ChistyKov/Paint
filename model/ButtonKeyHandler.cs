@@ -13,25 +13,25 @@ namespace Paint.model
     public class ButtonKeyHandler : Canvas
     {
         
-        private Canvas TempCanvas = new Canvas();
+        public Canvas TempCanvas = new Canvas();
 
-        public virtual void canvas_KeyDown_Z(object sender, KeyEventArgs e, Canvas MyCanvas, UIElement[] TempCanvass)
+        public virtual void canvas_KeyDown_Z(object sender, KeyEventArgs e, Canvas MyCanvas, UIElement[] CopyMyCanvas)
         {
             if (MyCanvas.Children.Count > 0)
             {
                 MyCanvas.Children.RemoveAt(MyCanvas.Children.Count - 1);
-                TempCanvas.Children.Add(TempCanvass[TempCanvass.Length - 1]);
+                TempCanvas.Children.Add(CopyMyCanvas[CopyMyCanvas.Length - 1]);
                 MyCanvas.UpdateLayout();
             }
         }
 
-        public virtual void canvas_KeyDown_Y(object sender, KeyEventArgs e, Canvas MyCanvas, UIElement[] TempCanvass)
+        public virtual void canvas_KeyDown_Y(object sender, KeyEventArgs e, Canvas MyCanvas)
         {
-            if (TempCanvas.Children.Count > 0 && )
+            if (TempCanvas.Children.Count > 0)
             {
-                var TempCanvasss = TempCanvas.Children[TempCanvas.Children.Count - 1];
+                var TemporaryСanvassElement = TempCanvas.Children[TempCanvas.Children.Count - 1];
                 TempCanvas.Children.RemoveAt(TempCanvas.Children.Count - 1);
-                MyCanvas.Children.Add(TempCanvasss);
+                MyCanvas.Children.Add(TemporaryСanvassElement);
                 MyCanvas.UpdateLayout();
             }
         }
