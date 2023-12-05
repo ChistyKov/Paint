@@ -77,7 +77,7 @@ namespace Paint
         
         Brush AllBrush;
 
-        private SaveFileDialog saveFileDialog = new SaveFileDialog();
+        System.Windows.Forms.SaveFileDialog saveFileDialog = new System.Windows.Forms.SaveFileDialog();
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
@@ -93,7 +93,10 @@ namespace Paint
             PngBitmapEncoder pngEncoder = new PngBitmapEncoder();
             pngEncoder.Frames.Add(BitmapFrame.Create(renderBitmap));
 
-            using (FileStream fileStream = new FileStream("canvas.png", FileMode.Create))
+            // Feed the dummy name to the save dialog
+            saveFileDialog.ShowDialog();
+				
+            using (FileStream fileStream = new FileStream(saveFileDialog.FileName, FileMode.Create))
             {
                 pngEncoder.Save(fileStream);
             }
@@ -123,6 +126,7 @@ namespace Paint
                 BKH.canvas_KeyDown_Y(sender, e, MyCanvas);
 
             }
+            
         }
         
 
@@ -246,8 +250,14 @@ namespace Paint
             button = true;
         }
 
+        private void Cursor_click(object sender, RoutedEventArgs e)
+        {
+            Draw = false;
+            button = false;
+        }
+
         #region Drawning
-        
+
 
         bool IsDrawning = false;
         
