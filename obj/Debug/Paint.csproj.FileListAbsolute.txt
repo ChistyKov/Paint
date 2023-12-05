@@ -43,3 +43,18 @@ C:\Users\Petruchio\Рабочий стол\ProjectPaint\Paint1\obj\Debug\Paint.c
 C:\Users\Petruchio\Рабочий стол\ProjectPaint\Paint1\obj\Debug\Paint.csproj.CoreCompileInputs.cache
 C:\Users\Petruchio\Рабочий стол\ProjectPaint\Paint1\obj\Debug\Paint.exe
 C:\Users\Petruchio\Рабочий стол\ProjectPaint\Paint1\obj\Debug\Paint.pdb
+F:\MyRepos\Paint\bin\Debug\Paint.exe.config
+F:\MyRepos\Paint\bin\Debug\Paint.exe
+F:\MyRepos\Paint\bin\Debug\Paint.pdb
+F:\MyRepos\Paint\obj\Debug\Paint.csproj.AssemblyReference.cache
+F:\MyRepos\Paint\obj\Debug\MainWindow.g.cs
+F:\MyRepos\Paint\obj\Debug\App.g.cs
+F:\MyRepos\Paint\obj\Debug\Paint_MarkupCompile.cache
+F:\MyRepos\Paint\obj\Debug\Paint_MarkupCompile.lref
+F:\MyRepos\Paint\obj\Debug\MainWindow.baml
+F:\MyRepos\Paint\obj\Debug\Paint.g.resources
+F:\MyRepos\Paint\obj\Debug\Paint.Properties.Resources.resources
+F:\MyRepos\Paint\obj\Debug\Paint.csproj.GenerateResource.cache
+F:\MyRepos\Paint\obj\Debug\Paint.csproj.CoreCompileInputs.cache
+F:\MyRepos\Paint\obj\Debug\Paint.exe
+F:\MyRepos\Paint\obj\Debug\Paint.pdb

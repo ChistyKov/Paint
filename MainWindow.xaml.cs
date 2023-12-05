@@ -29,41 +29,7 @@ namespace Paint
         {
             InitializeComponent();
             ChangeColor();
-           
         }
-
-        public Color wpfColor { get; set; }
-       
-        private void ColorButton_Click(object sender, RoutedEventArgs e)
-        {
-            // Создание и отображение диалогового окна выбора цвета
-            var colorDialog = new System.Windows.Forms.ColorDialog();
-            if (colorDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                // Преобразование выбранного цвета в объект System.Windows.Media.Color
-                var selectedColor = System.Drawing.Color.FromArgb(colorDialog.Color.ToArgb());
-                wpfColor = Color.FromArgb(
-                    selectedColor.A,
-                    selectedColor.R,
-                    selectedColor.G,
-                    selectedColor.B);
-
-                // Установка выбранного цвета в элемент управления TextBlock
-                ColorTextBlock.Background = new SolidColorBrush(wpfColor);
-            }
-        }
-
-
-
-
-
-
-
-
-
-
-
-
 
         CursorPaint1 CursorPaint = new CursorPaint1();
         
@@ -77,37 +43,10 @@ namespace Paint
         
         Brush AllBrush;
 
-        System.Windows.Forms.SaveFileDialog saveFileDialog = new System.Windows.Forms.SaveFileDialog();
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            int width = (int)Math.Ceiling(MyCanvas.ActualWidth);
-            int height = (int)Math.Ceiling(MyCanvas.ActualHeight);
-
-            // Create a bitmap image from the visual tree of the canvas
-            RenderTargetBitmap renderBitmap = new RenderTargetBitmap(
-                width, height, 96, 96, System.Windows.Media.PixelFormats.Pbgra32);
-            renderBitmap.Render(MyCanvas);
-
-            // Create a PNG encoder and save the bitmap to a file
-            PngBitmapEncoder pngEncoder = new PngBitmapEncoder();
-            pngEncoder.Frames.Add(BitmapFrame.Create(renderBitmap));
-
-            // Feed the dummy name to the save dialog
-            saveFileDialog.ShowDialog();
-				
-            using (FileStream fileStream = new FileStream(saveFileDialog.FileName, FileMode.Create))
-            {
-                pngEncoder.Save(fileStream);
-            }
-
-            Rectangle rectangle = new Rectangle();
-            rectangle.Width = 100;
-            rectangle.Height = 100;
-
-            MyCanvas.Children.Add(rectangle);
-            
-            MyCanvas.Focus();
+            BKH.SaveFile(MyCanvas);
         }
 
 
@@ -126,14 +65,17 @@ namespace Paint
                 BKH.canvas_KeyDown_Y(sender, e, MyCanvas);
 
             }
-            
+            if(e.Key == Key.S && e.KeyboardDevice.Modifiers == ModifierKeys.Control)
+            {
+                BKH.SaveFile(MyCanvas);
+            }
         }
-        
+
 
         // по сути выбор цвета тут
         private void ChangeColor()
         {
-            AllBrush = new SolidColorBrush((Color)wpfColor);
+            AllBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("red"));
         }
       
         bool Draw;
@@ -156,11 +98,11 @@ namespace Paint
                 }
             }
         }
-        
 
+             
         private void Window_MouseMove(object sender,MouseEventArgs e)
         {
-            
+
             
             if (Draw)
             {

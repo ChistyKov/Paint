@@ -15,7 +15,9 @@ namespace Paint.model
 {
     public class ButtonKeyHandler : Canvas
     {
-        
+        System.Windows.Forms.SaveFileDialog saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+
+
         public Canvas TempCanvas = new Canvas();
 
         public virtual void canvas_KeyDown_Z(object sender, KeyEventArgs e, Canvas MyCanvas, UIElement[] CopyMyCanvas)
@@ -38,7 +40,25 @@ namespace Paint.model
                 MyCanvas.UpdateLayout();
             }
         }
+        public virtual void SaveFile(Canvas MyCanvas)
+        {
+            int width = (int)Math.Ceiling(MyCanvas.ActualWidth);
+            int height = (int)Math.Ceiling(MyCanvas.ActualHeight);
 
+            RenderTargetBitmap renderBitmap = new RenderTargetBitmap(
+                width, height, 96, 96, System.Windows.Media.PixelFormats.Pbgra32);
+            renderBitmap.Render(MyCanvas);
+
+            PngBitmapEncoder pngEncoder = new PngBitmapEncoder();
+            pngEncoder.Frames.Add(BitmapFrame.Create(renderBitmap));
+
+            saveFileDialog.ShowDialog();
+
+            using (FileStream fileStream = new FileStream(saveFileDialog.FileName, FileMode.Create))
+            {
+                pngEncoder.Save(fileStream);
+            }
+        }
        
 
     }
