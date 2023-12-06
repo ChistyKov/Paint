@@ -48,8 +48,7 @@ namespace Paint
                     selectedColor.G,
                     selectedColor.B);
 
-                // Установка выбранного цвета в элемент управления TextBlock
-                ColorTextBlock.Background = new SolidColorBrush(wpfColor);
+
             }
         }
 
@@ -143,8 +142,12 @@ namespace Paint
                 }
             }
         }
-        
 
+        private void Cursor_click(object sender, RoutedEventArgs e)
+        {
+            Draw = false;
+            button = false;
+        }
         private void Window_MouseMove(object sender,MouseEventArgs e)
         {
             
