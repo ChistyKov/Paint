@@ -24,8 +24,9 @@ namespace Paint.model
         {
             if (MyCanvas.Children.Count > 0)
             {
+                var temp = MyCanvas.Children[MyCanvas.Children.Count - 1];
                 MyCanvas.Children.RemoveAt(MyCanvas.Children.Count - 1);
-                TempCanvas.Children.Add(CopyMyCanvas[CopyMyCanvas.Length - 1]);
+                TempCanvas.Children.Add(temp);
                 MyCanvas.UpdateLayout();
             }
         }

@@ -181,22 +181,6 @@ namespace Paint
                 Addtext = false;
             }
 
-            if (e.Source is UIElement element && element != MyCanvas)
-            {
-                isDragging = true;
-                draggedObject = element;
-                lastMousePosition = e.GetPosition(MyCanvas);
-
-                // Установка Z-позиции для перемещаемого объекта,
-                // чтобы он стал поверх всех остальных объектов в Canvas
-                Panel.SetZIndex(draggedObject, MyCanvas.Children.Count - 1);
-            }
-
-
-
-
-
-
 
 
 
@@ -225,21 +209,7 @@ namespace Paint
         private void Window_MouseMove(object sender,MouseEventArgs e)
         {
 
-            if (isDragging && draggedObject != null)
-            {
-                Point currentMousePosition = e.GetPosition(MyCanvas);
-                double offsetX = currentMousePosition.X - lastMousePosition.X;
-                double offsetY = currentMousePosition.Y - lastMousePosition.Y;
 
-                double newLeft = Canvas.GetLeft(draggedObject) + offsetX;
-                double newTop = Canvas.GetTop(draggedObject) + offsetY;
-
-                // Установка новых координат для перемещаемого объекта
-                Canvas.SetLeft(draggedObject, newLeft);
-                Canvas.SetTop(draggedObject, newTop);
-
-                lastMousePosition = currentMousePosition;
-            }
 
 
 
@@ -275,8 +245,6 @@ namespace Paint
         {
 
 
-            isDragging = false;
-            draggedObject = null;
 
             if (Draw && (sender is Canvas))
             {

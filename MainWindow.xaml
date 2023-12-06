@@ -21,6 +21,12 @@
 
         </Grid.RowDefinitions>
 
+
+        <Canvas x:Name="MyCanvas" Grid.Row="1" Background="White" 
+              
+               MouseMove="Window_MouseMove" MouseLeftButtonDown="Window_MouseLeftbuttonDown" MouseLeftButtonUp="Window_MouseLeftButtonUp" Margin="0,41,0,-39" Grid.RowSpan="2" 
+                />
+
         <StackPanel Orientation="Horizontal" Background="Gray"  Grid.Row="0">
             <Button x:Name="File" Content="File"   Margin="3" Padding="3"/>
             <DockPanel LastChildFill="False" Width="100">
@@ -34,12 +40,6 @@
                 </Expander>
             </DockPanel>
         </StackPanel>
-        <Canvas x:Name="MyCanvas" Grid.Row="1" Background="White" 
-              
-               MouseMove="Window_MouseMove" MouseLeftButtonDown="Window_MouseLeftbuttonDown" MouseLeftButtonUp="Window_MouseLeftButtonUp" Margin="0,41,0,0" Grid.RowSpan="2" 
-                />
-
-        
         <Button x:Name="saveButton" Content="Save As..." Click="SaveButton_Click" Margin="72,0,1000,0" />
         <Button x:Name="ColorFillingButton" Content="Выбрать цвет заливки" HorizontalAlignment="Left" VerticalAlignment="Center" Click="ColorButton_Click" Margin="142,0,0,0" Height="42"/>
         <Button x:Name="ColorLinesButton" Content="Выбрать цвет линии" HorizontalAlignment="Left" VerticalAlignment="Center" Click="ColorButton_Click" Margin="285,0,0,0" Height="42"/>
