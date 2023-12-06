@@ -76,37 +76,31 @@ namespace Paint
         AllOblicks AllOblick;
         
         Brush ColorFilling;
-
-        Brush ColorLines;
-
-        private SaveFileDialog saveFileDialog = new SaveFileDialog();
+        //Для удобства устанавливаем стандартный цвет линии
+        Brush ColorLines = new SolidColorBrush((Color)ColorConverter.ConvertFromString("black"));
+        
+        private Microsoft.Win32.SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog();
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             int width = (int)Math.Ceiling(MyCanvas.ActualWidth);
             int height = (int)Math.Ceiling(MyCanvas.ActualHeight);
 
-            // Create a bitmap image from the visual tree of the canvas
             RenderTargetBitmap renderBitmap = new RenderTargetBitmap(
                 width, height, 96, 96, System.Windows.Media.PixelFormats.Pbgra32);
             renderBitmap.Render(MyCanvas);
 
-            // Create a PNG encoder and save the bitmap to a file
             PngBitmapEncoder pngEncoder = new PngBitmapEncoder();
             pngEncoder.Frames.Add(BitmapFrame.Create(renderBitmap));
 
-            using (FileStream fileStream = new FileStream("canvas.png", FileMode.Create))
+            saveFileDialog.Filter = "Picture files (*.png)|*.png|Picture files (*.jpg)|*.jpg|All files (*.*)|*.* ";
+            if (saveFileDialog.ShowDialog() == true)
             {
-                pngEncoder.Save(fileStream);
+                using (FileStream fileStream = new FileStream(saveFileDialog.FileName, FileMode.Create))
+                {
+                    pngEncoder.Save(fileStream);
+                }
             }
-
-            Rectangle rectangle = new Rectangle();
-            rectangle.Width = 100;
-            rectangle.Height = 100;
-
-            MyCanvas.Children.Add(rectangle);
-            
-            MyCanvas.Focus();
         }
 
 
