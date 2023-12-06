@@ -6,35 +6,47 @@
         xmlns:local="clr-namespace:Paint"
         mc:Ignorable="d"
         Title="MainWindow" Height="578" Width="1137">
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FF191B42" Offset="0"/>
+            <GradientStop Color="#FFA0A5FF" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Background>
     <Grid >
 
         <Grid.RowDefinitions>
             <RowDefinition Height="42"/>
             <RowDefinition Height="42"/>
             <RowDefinition />
+
         </Grid.RowDefinitions>
 
-       
-        <Canvas x:Name="MyCanvas" Grid.Row="2" Background="White" 
+
+        <Canvas x:Name="MyCanvas" Grid.Row="1" Background="White" 
               
-               MouseMove="Window_MouseMove" MouseLeftButtonDown="Window_MouseLeftbuttonDown" MouseLeftButtonUp="Window_MouseLeftButtonUp" 
+               MouseMove="Window_MouseMove" MouseLeftButtonDown="Window_MouseLeftbuttonDown" MouseLeftButtonUp="Window_MouseLeftButtonUp" Margin="0,41,0,1" Grid.RowSpan="2" 
                 />
+
         <StackPanel Orientation="Horizontal" Background="Gray"  Grid.Row="0">
             <Button x:Name="File" Content="File"   Margin="3" Padding="3"/>
             <DockPanel LastChildFill="False" Width="100">
                 <Expander DockPanel.Dock="Bottom">
-            <StackPanel>
-                <TextBlock Height="25"></TextBlock>
-                <TextBlock Height="25"></TextBlock>
-                <TextBlock Height="25"></TextBlock>
+                    <StackPanel>
+                        <TextBlock Height="25"></TextBlock>
+                        <TextBlock Height="25"></TextBlock>
+                        <TextBlock Height="25"></TextBlock>
 
-            </StackPanel>
-        </Expander>
+                    </StackPanel>
+                </Expander>
             </DockPanel>
         </StackPanel>
         <Button x:Name="saveButton" Content="Save As..." Click="SaveButton_Click" Margin="72,0,1000,0" />
+        <Button x:Name="ColorButton" Content="Выбрать цвет" HorizontalAlignment="Left" VerticalAlignment="Center" Click="ColorButton_Click" Margin="142,0,0,0" Height="42"/>
+        <TextBlock x:Name="ColorTextBlock" Width="100" Height="100" Margin="0,50,0,0"/>
+
+
         <StackPanel Orientation="Horizontal" Background="DarkGray"  Grid.Row="1">
-            
+
             <Button x:Name="Line" Content="Line" Click="Line_click"  Margin="3" Padding="3"/>
             <Button x:Name="Circle" Content="Circle" Click="Cicle_click"  Margin="3" Padding="3"/>
             <Button x:Name="Oval" Content="Oval" Click="Oval_click"  Margin="3" Padding="3"/>

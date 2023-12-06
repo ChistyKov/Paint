@@ -17,7 +17,6 @@ using System.Windows.Shapes;
 using Microsoft.Win32;
 using System.IO;
 
-
 namespace Paint
 {
     /// <summary>
@@ -30,7 +29,41 @@ namespace Paint
         {
             InitializeComponent();
             ChangeColor();
+           
         }
+
+        public Color wpfColor { get; set; }
+       
+        private void ColorButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Создание и отображение диалогового окна выбора цвета
+            var colorDialog = new System.Windows.Forms.ColorDialog();
+            if (colorDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                // Преобразование выбранного цвета в объект System.Windows.Media.Color
+                var selectedColor = System.Drawing.Color.FromArgb(colorDialog.Color.ToArgb());
+                wpfColor = Color.FromArgb(
+                    selectedColor.A,
+                    selectedColor.R,
+                    selectedColor.G,
+                    selectedColor.B);
+
+                // Установка выбранного цвета в элемент управления TextBlock
+                ColorTextBlock.Background = new SolidColorBrush(wpfColor);
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
 
         CursorPaint1 CursorPaint = new CursorPaint1();
         
@@ -64,6 +97,14 @@ namespace Paint
             {
                 pngEncoder.Save(fileStream);
             }
+
+            Rectangle rectangle = new Rectangle();
+            rectangle.Width = 100;
+            rectangle.Height = 100;
+
+            MyCanvas.Children.Add(rectangle);
+            
+            MyCanvas.Focus();
         }
 
 
@@ -83,12 +124,12 @@ namespace Paint
 
             }
         }
-
+        
 
         // по сути выбор цвета тут
         private void ChangeColor()
         {
-            AllBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("red"));
+            AllBrush = new SolidColorBrush((Color)wpfColor);
         }
       
         bool Draw;
@@ -111,11 +152,11 @@ namespace Paint
                 }
             }
         }
+        
 
-             
         private void Window_MouseMove(object sender,MouseEventArgs e)
         {
-
+            
             
             if (Draw)
             {
