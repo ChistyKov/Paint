@@ -29,7 +29,9 @@ namespace Paint
         {
             InitializeComponent();
             ChangeColor();
-           
+            //MyCanvas.MouseDown += Window_MouseLeftbuttonDown;
+            //MyCanvas.MouseMove += Window_MouseMove;
+            //MyCanvas.MouseUp += Window_MouseLeftButtonUp;
         }
 
         public Color wpfColor { get; set; }
@@ -83,15 +85,18 @@ namespace Paint
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            int width = (int)Math.Ceiling(MyCanvas.ActualWidth);
-            int height = (int)Math.Ceiling(MyCanvas.ActualHeight);
+            // Создание объекта RenderTargetBitmap с размерами канваса
+            RenderTargetBitmap renderTargetBitmap = new RenderTargetBitmap(
+                (int)MyCanvas.ActualWidth, (int)MyCanvas.ActualHeight, 96, 96, PixelFormats.Pbgra32);
 
-            RenderTargetBitmap renderBitmap = new RenderTargetBitmap(
-                width, height, 96, 96, System.Windows.Media.PixelFormats.Pbgra32);
-            renderBitmap.Render(MyCanvas);
+            // Рендеринг канваса в RenderTargetBitmap
+            renderTargetBitmap.Render(MyCanvas);
 
+            // Создание объекта PngBitmapEncoder для сохранения изображения в формате PNG
             PngBitmapEncoder pngEncoder = new PngBitmapEncoder();
-            pngEncoder.Frames.Add(BitmapFrame.Create(renderBitmap));
+            pngEncoder.Frames.Add(BitmapFrame.Create(renderTargetBitmap));
+
+            
 
             saveFileDialog.Filter = "Picture files (*.png)|*.png|Picture files (*.jpg)|*.jpg|All files (*.*)|*.* ";
             if (saveFileDialog.ShowDialog() == true)
@@ -101,6 +106,12 @@ namespace Paint
                     pngEncoder.Save(fileStream);
                 }
             }
+        }
+        
+        bool Addtext = false;
+        private void TextBox_Click(object sender, RoutedEventArgs e)
+        {
+            Addtext = true;
         }
 
 
@@ -119,6 +130,13 @@ namespace Paint
                 BKH.canvas_KeyDown_Y(sender, e, MyCanvas);
 
             }
+            if (e.Key == Key.Escape)
+            {
+                Keyboard.ClearFocus();
+                Draw = false;
+                button = false;
+            }
+
         }
         
 
@@ -130,9 +148,59 @@ namespace Paint
       
         bool Draw;
         bool button;
-        
+
+
+        private bool isDragging = false;
+        private UIElement draggedObject;
+        private Point lastMousePosition;
         private void Window_MouseLeftbuttonDown(object sender,MouseButtonEventArgs e)
         {
+            if (Addtext)
+            {
+                // Проверяем, что клик был выполнен в Canvas
+                if (sender is Canvas canvas)
+                {
+                    Point clickedPoint = e.GetPosition(canvas);
+
+                    // Создаем TextBox
+                    TextBox textBox = new TextBox();
+                    textBox.Width = 100;
+                    textBox.Height = Double.NaN;
+                    textBox.FontSize = 12;
+                    textBox.AcceptsReturn = true;
+                    textBox.TextWrapping = TextWrapping.Wrap; // Чтобы поле могло расширяться
+
+                    Canvas.SetLeft(textBox, clickedPoint.X);
+                    Canvas.SetTop(textBox, clickedPoint.Y);
+
+                    canvas.Children.Add(textBox);
+
+                    // Устанавливаем фокус на TextBox
+                    textBox.Focus();
+                }
+                Addtext = false;
+            }
+
+            if (e.Source is UIElement element && element != MyCanvas)
+            {
+                isDragging = true;
+                draggedObject = element;
+                lastMousePosition = e.GetPosition(MyCanvas);
+
+                // Установка Z-позиции для перемещаемого объекта,
+                // чтобы он стал поверх всех остальных объектов в Canvas
+                Panel.SetZIndex(draggedObject, MyCanvas.Children.Count - 1);
+            }
+
+
+
+
+
+
+
+
+
+
             if (Draw && (sender is Canvas))
             {                
                 Mouse.Capture(MyCanvas);
@@ -156,8 +224,28 @@ namespace Paint
         }
         private void Window_MouseMove(object sender,MouseEventArgs e)
         {
-            
-            
+
+            if (isDragging && draggedObject != null)
+            {
+                Point currentMousePosition = e.GetPosition(MyCanvas);
+                double offsetX = currentMousePosition.X - lastMousePosition.X;
+                double offsetY = currentMousePosition.Y - lastMousePosition.Y;
+
+                double newLeft = Canvas.GetLeft(draggedObject) + offsetX;
+                double newTop = Canvas.GetTop(draggedObject) + offsetY;
+
+                // Установка новых координат для перемещаемого объекта
+                Canvas.SetLeft(draggedObject, newLeft);
+                Canvas.SetTop(draggedObject, newTop);
+
+                lastMousePosition = currentMousePosition;
+            }
+
+
+
+
+
+
             if (Draw)
             {
                 if (IsDrawning == true && (sender is Canvas))
@@ -186,6 +274,9 @@ namespace Paint
         private void Window_MouseLeftButtonUp(object sender,MouseButtonEventArgs e)
         {
 
+
+            isDragging = false;
+            draggedObject = null;
 
             if (Draw && (sender is Canvas))
             {

@@ -24,7 +24,7 @@
 
         <Canvas x:Name="MyCanvas" Grid.Row="1" Background="White" 
               
-               MouseMove="Window_MouseMove" MouseLeftButtonDown="Window_MouseLeftbuttonDown" MouseLeftButtonUp="Window_MouseLeftButtonUp" Margin="0,41,0,1" Grid.RowSpan="2" 
+               MouseMove="Window_MouseMove" MouseLeftButtonDown="Window_MouseLeftbuttonDown" MouseLeftButtonUp="Window_MouseLeftButtonUp" Margin="0,41,0,0" Grid.RowSpan="2" 
                 />
 
         <StackPanel Orientation="Horizontal" Background="Gray"  Grid.Row="0">
@@ -53,6 +53,7 @@
             <Button x:Name="Polygon" Content="Polygon" Click="Polygon_click"  Margin="3" Padding="3"/>
             <Button x:Name="Paint" Content="Paint" Click="Paint_click"  Margin="3" Padding="3"/>
             <Button x:Name="Cursor" Content="Cursor" Click="Cursor_click"  Margin="3" Padding="3"/>
+            <Button x:Name="TextBoxx" Content="textBox" Click="TextBox_Click"  Margin="3" Padding="3"/>
 
         </StackPanel>
 
