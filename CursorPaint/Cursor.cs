@@ -30,13 +30,13 @@ namespace Paint.CursorPaint
         }
 
       
-        public void StartFigure(Canvas MyCanvas, Point start)
+        public void StartFigure(Canvas MyCanvas, Point start, Brush ColorLine)
         {
             currentFigure = new PathFigure() { StartPoint = start };
             var currentPath =
                 new Path()
                 {
-                    Stroke = Brushes.Black,
+                    Stroke = ColorLine,
                     StrokeThickness = 3,
                     Data = new PathGeometry() { Figures = { currentFigure } }
                 };

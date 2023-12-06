@@ -36,6 +36,7 @@ namespace Paint
        
         private void ColorButton_Click(object sender, RoutedEventArgs e)
         {
+            Button clickedButton = (Button)sender;
             // Создание и отображение диалогового окна выбора цвета
             var colorDialog = new System.Windows.Forms.ColorDialog();
             if (colorDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
@@ -48,8 +49,17 @@ namespace Paint
                     selectedColor.G,
                     selectedColor.B);
 
-
             }
+            switch (clickedButton.Name)
+            {
+                case "ColorFillingButton":
+                    ColorFilling = new SolidColorBrush(wpfColor);
+                    break;
+                case "ColorLinesButton":
+                    ColorLines = new SolidColorBrush(wpfColor);
+                    break;
+            }
+
         }
 
 
@@ -65,7 +75,9 @@ namespace Paint
 
         AllOblicks AllOblick;
         
-        Brush AllBrush;
+        Brush ColorFilling;
+
+        Brush ColorLines;
 
         private SaveFileDialog saveFileDialog = new SaveFileDialog();
 
@@ -119,7 +131,7 @@ namespace Paint
         // по сути выбор цвета тут
         private void ChangeColor()
         {
-            AllBrush = new SolidColorBrush(wpfColor);
+            ColorFilling = new SolidColorBrush(wpfColor);
         }
       
         bool Draw;
@@ -131,7 +143,7 @@ namespace Paint
             {                
                 Mouse.Capture(MyCanvas);
                 IsDrawning = true;
-                CursorPaint.StartFigure(MyCanvas, e.GetPosition(MyCanvas));              
+                CursorPaint.StartFigure(MyCanvas, e.GetPosition(MyCanvas), ColorLines);              
             }
             if (button)
             {
@@ -169,7 +181,7 @@ namespace Paint
                 EndPoint = e.GetPosition(MyCanvas);
                 if (Oblick != null)
                 {
-                    Oblick.ShapeUpdeting(2, MyCanvas, Brushes.Black, StartPoint, EndPoint, AllBrush);
+                    Oblick.ShapeUpdeting(2, MyCanvas, ColorLines, StartPoint, EndPoint, ColorFilling);
                     Oblick.UpdateFiqure();
                 }
                 BKH.TempCanvas.Children.Clear();
