@@ -37,6 +37,7 @@ namespace Paint.CursorPaint
             var currentPath =
                 new Path()
                 {
+                    
                     Stroke = ColorLine,
                     StrokeThickness = 3,
                     Data = new PathGeometry() { Figures = { currentFigure } }

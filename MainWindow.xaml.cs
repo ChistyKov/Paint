@@ -206,12 +206,14 @@ namespace Paint
             Draw = false;
             button = false;
         }
+
+
         private void Window_MouseMove(object sender,MouseEventArgs e)
         {
 
 
 
-
+            
 
 
 
@@ -243,7 +245,6 @@ namespace Paint
 
         private void Window_MouseLeftButtonUp(object sender,MouseButtonEventArgs e)
         {
-
 
 
             if (Draw && (sender is Canvas))
@@ -294,9 +295,6 @@ namespace Paint
         }
         private void Polygon_click(object sender, RoutedEventArgs e)
         {   
-            AllOblick = AllOblicks.Pylygon;
-            Draw = false;
-            button = true;
         }
         private void Rectangle_click(object sender, RoutedEventArgs e)
         {      
