@@ -63,10 +63,8 @@
 
         <Label
             Content="Толщина кисти" HorizontalAlignment="Left" Margin="34,213,0,0" VerticalAlignment="Top" Height="23"/>
-        <Label x:Name="ColorFill"
-Content="" HorizontalAlignment="Left" Margin="174,299,0,0" VerticalAlignment="Top" FontSize="14" Width="21" Height="19"/>
-        <Label x:Name="ColorContur"
-Content="" HorizontalAlignment="Left" Margin="174,320,0,0" VerticalAlignment="Top" FontSize="14" Width="21" Height="18"/>
+        <Label x:Name="ColorFill" Content="" HorizontalAlignment="Left" Margin="174,299,0,0" VerticalAlignment="Top" FontSize="14" Width="21" Height="19"/>
+        <Label x:Name="ColorContur" Content="" HorizontalAlignment="Left" Margin="174,320,0,0" VerticalAlignment="Top" FontSize="14" Width="21" Height="18"/>
 
         <Slider x:Name="BrushSlider" HorizontalAlignment="Left" Margin="21,233,0,0" VerticalAlignment="Top" Height="23" Minimum="1" Maximum="50" 
                 ValueChanged="Slider_value_Stroke" Value="1" SmallChange="0.5" Width="148" Cursor="Hand"/>
