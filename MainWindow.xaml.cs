@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Windows.Ink;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -27,15 +27,17 @@ namespace Paint
     public partial class MainWindow : Window
     {
 
-
         public MainWindow()
         {
             InitializeComponent();
             ChangeColor();
-            
+            //MyCanvas.MouseDown += Window_MouseLeftbuttonDown;
+            //MyCanvas.MouseMove += Window_MouseMove;
+            //MyCanvas.MouseUp += Window_MouseLeftButtonUp;
         }
-        public int StrokeThick;
+
         public Color wpfColor { get; set; }
+
         private void ColorButton_Click(object sender, RoutedEventArgs e)
         {
             Button clickedButton = (Button)sender;
@@ -79,7 +81,7 @@ namespace Paint
 
         Brush ColorFilling;
         //Для удобства устанавливаем стандартный цвет линии
-        Brush ColorLines = new SolidColorBrush((Color)ColorConverter.ConvertFromString("Red"));
+        Brush ColorLines = new SolidColorBrush((Color)ColorConverter.ConvertFromString("black"));
 
         private Microsoft.Win32.SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog();
 
@@ -153,12 +155,11 @@ namespace Paint
 
         private void Window_MouseLeftbuttonDown(object sender, MouseButtonEventArgs e)
         {
-            if (Draw && (sender is InkCanvas))
-            {
-                Mouse.Capture(MyCanvas);
-                IsDrawning = true;
-                CursorPaint.StartFigure(MyCanvas, e.GetPosition(MyCanvas), ColorLines);
-            }
+
+
+
+
+
             if (Addtext)
             {
                 // Проверяем, что клик был выполнен в Canvas
@@ -185,6 +186,16 @@ namespace Paint
                 Addtext = false;
             }
 
+
+
+
+
+            if (Draw && (sender is Canvas))
+            {
+                Mouse.Capture(MyCanvas);
+                IsDrawning = true;
+                CursorPaint.StartFigure(MyCanvas, e.GetPosition(MyCanvas), ColorLines);
+            }
             if (button)
             {
                 StartPoint = e.GetPosition(MyCanvas);
@@ -195,14 +206,26 @@ namespace Paint
             }
         }
 
-       
+        private void Cursor_click(object sender, RoutedEventArgs e)
+        {
+            Draw = false;
+            button = false;
+        }
 
 
         private void Window_MouseMove(object sender, MouseEventArgs e)
         {
+
+
+
+
+
+
+
+
             if (Draw)
             {
-                if (IsDrawning == true && (sender is InkCanvas))
+                if (IsDrawning == true && (sender is Canvas))
                 {
                     CursorPaint.AddFigurePoint(e.GetPosition(MyCanvas));
                     //Очистка временного канваса
@@ -211,14 +234,13 @@ namespace Paint
 
 
             }
-
             if (button)
             {
 
                 EndPoint = e.GetPosition(MyCanvas);
                 if (Oblick != null)
                 {
-                    Oblick.ShapeUpdeting(StrokeThick, MyCanvas, ColorLines, StartPoint, EndPoint, ColorFilling);
+                    Oblick.ShapeUpdeting(2, MyCanvas, ColorLines, StartPoint, EndPoint, ColorFilling);
                     Oblick.UpdateFiqure();
                 }
                 BKH.TempCanvas.Children.Clear();
@@ -229,29 +251,22 @@ namespace Paint
         private void Window_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
 
-            if (Draw && (sender is InkCanvas))
+
+            if (Draw && (sender is Canvas))
             {
                 CursorPaint.AddFigurePoint(e.GetPosition(MyCanvas));
                 Mouse.Capture(null);
                 CursorPaint.EndFigure();
-                
+
 
                 IsDrawning = false;
             }
-
             if (button)
             {
                 Oblick = null;
 
             }
 
-        }
-        #region button
-        private void Cursor_click(object sender, RoutedEventArgs e)
-        {
-            Draw = false;
-            button = false;
-            MyCanvas.EditingMode = InkCanvasEditingMode.None;
         }
 
         private void Paint_click(object sender, RoutedEventArgs e)
@@ -292,91 +307,6 @@ namespace Paint
             Draw = false;
             button = true;
         }
-        #endregion
-
-
-
-
-
-        private void Mode_Checked(object sender,RoutedEventArgs e)
-        {
-            var mode = sender as RadioButton;
-            string modeName = mode.Name;
-            if (modeName.Equals("CursorB"))
-            {
-                MyCanvas.EditingMode = InkCanvasEditingMode.None;
-                Draw = false;
-                button = false;
-            }
-            if (modeName.Equals("PaintB"))
-            {
-                //MyCanvas.EditingMode = InkCanvasEditingMode.Ink  ;
-                AllOblick = AllOblicks.Paint;
-                Draw = true;
-                button = false;
-            }
-            if (modeName.Equals("EaraseB"))
-            { 
-                Draw = false;
-                button = false;
-
-                MyCanvas.EditingModeInverted = InkCanvasEditingMode.EraseByPoint;
-            }
-            if (modeName.Equals("RectangleB"))
-            {
-                MyCanvas.EditingMode = InkCanvasEditingMode.None;
-                AllOblick = AllOblicks.Rectangle;
-                Draw = false;
-                button = true;
-            }
-            if (modeName.Equals("CircleB"))
-            {
-                MyCanvas.EditingMode = InkCanvasEditingMode.None;
-                AllOblick = AllOblicks.Circle;
-                Draw = false;
-                button = true;
-            }
-            if (modeName.Equals("OvalB"))
-            {
-                MyCanvas.EditingMode = InkCanvasEditingMode.None;
-                AllOblick = AllOblicks.Oval;
-                Draw = false;
-                button = true;
-            }
-            if (modeName.Equals("BackB"))
-            {
-                MyCanvas.Children.Clear();
-            }
-            if (modeName.Equals("ColorFillingB"))
-            {
-
-            }
-            
-        }
-
-        //толщина кисти
-        private void Slider_value_Stroke(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            var slider = sender as Slider;
-           
-            CursorPaint = new CursorPaint1();
-
-            CursorPaint.Strokethik = (int)slider.Value;
-            StrokeThick = (int)slider.Value;
-
-
-
-
-
-        }
-
-        //ПРИКИНУТЬ КАК ЭТО СДЕЛАТЬ
-        //public void Select(System.Collections.Generic.IEnumerable<System.Windows.UIElement> selectedElemens)
-        //{
-
-        //}
-
-
 
         #region Drawning
 
