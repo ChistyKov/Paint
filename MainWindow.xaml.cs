@@ -32,7 +32,8 @@ namespace Paint
         {
             InitializeComponent();
             ChangeColor();
-            
+            //PaintWindow.ResizeMode = System.Windows.ResizeMode.NoResize;
+
         }
         public int StrokeThick;
         public Color wpfColor { get; set; }
@@ -56,9 +57,11 @@ namespace Paint
             {
                 case "ColorFillingButton":
                     ColorFilling = new SolidColorBrush(wpfColor);
+                    ColorFill.Background = new SolidColorBrush(wpfColor);
                     break;
                 case "ColorLinesButton":
                     ColorLines = new SolidColorBrush(wpfColor);
+                    ColorContur.Background = new SolidColorBrush(wpfColor);
                     break;
             }
 
@@ -319,7 +322,7 @@ namespace Paint
             { 
                 Draw = false;
                 button = false;
-
+                AllOblick = AllOblicks.Paint;
                 MyCanvas.EditingModeInverted = InkCanvasEditingMode.EraseByPoint;
             }
             if (modeName.Equals("RectangleB"))
