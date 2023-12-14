@@ -155,6 +155,11 @@ namespace Paint
 
         private void Window_MouseLeftbuttonDown(object sender, MouseButtonEventArgs e)
         {
+
+
+
+
+
             if (Addtext)
             {
                 // Проверяем, что клик был выполнен в Canvas
