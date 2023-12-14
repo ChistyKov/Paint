@@ -9,6 +9,7 @@ namespace Paint.model
 {
     public static class OblickCreator
     {
+        
         public static Oblick Creator(AllOblicks Oblicks)
         {
 

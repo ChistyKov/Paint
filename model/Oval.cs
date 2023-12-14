@@ -21,8 +21,8 @@ namespace Paint.model
             base.UpdateFiqure();
             CurrentShape.Width = Math.Abs(StartPoint.X - EndPoint.X);
             CurrentShape.Height = Math.Abs(StartPoint.Y - EndPoint.Y);
-            Canvas.SetTop(CurrentShape, Math.Min(StartPoint.Y, EndPoint.Y));
-            Canvas.SetLeft(CurrentShape, Math.Min(StartPoint.X, EndPoint.X));
+            InkCanvas.SetTop(CurrentShape, Math.Min(StartPoint.Y, EndPoint.Y));
+            InkCanvas.SetLeft(CurrentShape, Math.Min(StartPoint.X, EndPoint.X));
         }
     }
 }

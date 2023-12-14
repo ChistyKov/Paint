@@ -13,12 +13,12 @@ using Paint;
 
 namespace Paint.model
 {
-    public class ButtonKeyHandler : Canvas
+    public class ButtonKeyHandler : InkCanvas
     {
         
-        public Canvas TempCanvas = new Canvas();
+        public InkCanvas TempCanvas = new InkCanvas();
 
-        public virtual void canvas_KeyDown_Z(object sender, KeyEventArgs e, Canvas MyCanvas, UIElement[] CopyMyCanvas)
+        public virtual void canvas_KeyDown_Z(object sender, KeyEventArgs e, InkCanvas MyCanvas, UIElement[] CopyMyCanvas)
         {
             if (MyCanvas.Children.Count > 0)
             {
@@ -28,7 +28,7 @@ namespace Paint.model
             }
         }
 
-        public virtual void canvas_KeyDown_Y(object sender, KeyEventArgs e, Canvas MyCanvas)
+        public virtual void canvas_KeyDown_Y(object sender, KeyEventArgs e, InkCanvas MyCanvas)
         {
             if (TempCanvas.Children.Count > 0)
             {

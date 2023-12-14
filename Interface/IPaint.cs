@@ -13,8 +13,7 @@ namespace Paint.Interface
 {
     internal interface IShape 
     {
-   
-       void ShapeUpdeting(double LineThikness, Canvas Canvas, Brush LineColor, Point StartPoint, Point EndPoint, Brush FillColor);        
+       void ShapeUpdeting(int LineThikness, InkCanvas Canvas, Brush LineColor, Point StartPoint, Point EndPoint, Brush FillColor);        
     }
     
     internal interface IUpdateFigure

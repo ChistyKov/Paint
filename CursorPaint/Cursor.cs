@@ -16,10 +16,9 @@ namespace Paint.CursorPaint
     {
 
         PathFigure currentFigure { get; set; }
-
+        
         public CursorPaint1()
         {
-
             currentFigure = new PathFigure();
         }
 
@@ -29,21 +28,21 @@ namespace Paint.CursorPaint
         {
             currentFigure = null;
         }
-
-
-        public void StartFigure(Canvas MyCanvas, Point start, Brush ColorLine)
+        public int Strokethik = 3;
+        
+        public void StartFigure(InkCanvas MyCanvas, Point start, Brush ColorLine)
         {
             currentFigure = new PathFigure() { StartPoint = start };
             var currentPath =
                 new Path()
                 {
-
                     Stroke = ColorLine,
-                    StrokeThickness = 3,
+                    StrokeThickness = Strokethik,
                     Data = new PathGeometry() { Figures = { currentFigure } }
                 };
             MyCanvas.Children.Add(currentPath);
-            Canvas.SetZIndex(currentPath, int.MaxValue);
+            
+           
         }
         public void AddFigurePoint(Point point)
         {

@@ -69,6 +69,7 @@
     </Compile>
     <Compile Include="CursorPaint\Cursor.cs" />
     <Compile Include="Enum\ButtonEnum.cs" />
+    <Compile Include="Erase\EraseClass.cs" />
     <Compile Include="Interface\IPaint.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
