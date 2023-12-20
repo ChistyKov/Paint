@@ -59,6 +59,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Save.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -70,7 +71,6 @@
     <Compile Include="ChangeColor\ChangeColor.cs" />
     <Compile Include="CursorPaint\Cursor.cs" />
     <Compile Include="Enum\ButtonEnum.cs" />
-    <Compile Include="Erase\EraseClass.cs" />
     <Compile Include="Interface\IPaint.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
