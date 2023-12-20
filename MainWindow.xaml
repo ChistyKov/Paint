@@ -17,12 +17,9 @@
 
 
 
-        <InkCanvas x:Name="MyCanvas" Grid.Row="2" Background="White" EditingMode="None"
-              
-               MouseMove="Window_MouseMove" MouseLeftButtonDown="Window_MouseLeftbuttonDown" MouseLeftButtonUp="Window_MouseLeftButtonUp" Margin="362,34,50,34" >
 
-
-        </InkCanvas>
+        <InkCanvas x:Name="MyCanvas" Background="White" EditingMode="None"             
+               MouseMove="Window_MouseMove" MouseLeftButtonDown="Window_MouseLeftbuttonDown" MouseLeftButtonUp="Window_MouseLeftButtonUp" Margin="362,34,0,0" Height="494" VerticalAlignment="Top" HorizontalAlignment="Left" Width="725"  />
 
 
         <Border BorderBrush="DarkSalmon"
@@ -30,25 +27,29 @@
                 BorderThickness="2"
                 CornerRadius="6"
                 Height="542"
-                Width ="208"
                 HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                Margin="10,0,0,0"
+                VerticalAlignment="Top"
+                Margin="10,0,0,0" Width="199" 
                 
-                >
-
-
-
-
+               >
+            <Border.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleY="0.136"/>
+                    <RotateTransform/>
+                    <TranslateTransform Y="0.248"/>
+                </TransformGroup>
+            </Border.RenderTransform>
         </Border>
 
 
-        <StackPanel HorizontalAlignment="Left"  Margin="20,34,0,480" Width="169">
+
+        <StackPanel HorizontalAlignment="Left"  Margin="20,34,0,0" Width="169" Height="330" VerticalAlignment="Top">
             <Button x:Name="Save" Content="Save" Click="SaveButton_Click"/>
 
 
         </StackPanel>
-        <StackPanel HorizontalAlignment="Left"  Margin="20,74,0,349">
+        <StackPanel HorizontalAlignment="Left"  Margin="20,74,0,0" Height="421" VerticalAlignment="Top">
             <GroupBox Height="26" Header="Режим" HorizontalAlignment="Left" BorderBrush="DarkSlateBlue" Width="122" />
             <RadioButton x:Name="CursorB" Content="Курсор" Checked="Mode_Checked"/>
             <RadioButton x:Name="PaintB" Content="Рисование" Checked="Mode_Checked"/>
@@ -63,18 +64,18 @@
 
         <Label
             Content="Толщина кисти" HorizontalAlignment="Left" Margin="34,213,0,0" VerticalAlignment="Top" Height="23"/>
-        <Label x:Name="ColorFill" Content="" HorizontalAlignment="Left" Margin="174,299,0,0" VerticalAlignment="Top" FontSize="14" Width="21" Height="19"/>
-        <Label x:Name="ColorContur" Content="" HorizontalAlignment="Left" Margin="174,320,0,0" VerticalAlignment="Top" FontSize="14" Width="21" Height="18"/>
+        <Label x:Name="ColorFill" Content="" HorizontalAlignment="Left" Margin="174,19,0,0" VerticalAlignment="Top" FontSize="14" Width="21" Height="19" Grid.Row="1"/>
+        <Label x:Name="ColorContur" Content="" HorizontalAlignment="Left" Margin="174,40,0,0" VerticalAlignment="Top" FontSize="14" Width="21" Height="18" Grid.Row="1"/>
 
-        <Slider x:Name="BrushSlider" HorizontalAlignment="Left" Margin="21,233,0,0" VerticalAlignment="Top" Height="23" Minimum="1" Maximum="50" 
-                ValueChanged="Slider_value_Stroke" Value="1" SmallChange="0.5" Width="148" Cursor="Hand"/>
-        <TextBox HorizontalAlignment="Left" Margin="174,233,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="30" Height="16" 
+        <Slider x:Name="BrushSlider" Margin="18,233,0,0" VerticalAlignment="Top" Height="23" Minimum="1" Maximum="50" 
+                ValueChanged="Slider_value_Stroke" Value="1" SmallChange="0.5" Cursor="Hand" HorizontalAlignment="Left" Width="148"/>
+        <TextBox HorizontalAlignment="Left"  Margin="166,233,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="30" Height="16" 
                  Text="{Binding  ElementName=BrushSlider, Path= Value, StringFormat=0 ,ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
         <Label x:Name="lbl1"
-               Content="Выбранный цвет" HorizontalAlignment="Left" Margin="21,270,0,0" VerticalAlignment="Top" FontSize="14" Width="145"/>
-        <StackPanel HorizontalAlignment="Left"  Margin="21,299,0,179" Width="148">
-            <Button x:Name="ColorFillingButton" Content="Цвет Заливки" Click="ColorButton_Click"/>
+               Content="Выбранный цвет" HorizontalAlignment="Left" Margin="21,270,0,0" VerticalAlignment="Top" FontSize="14" Width="145" Grid.RowSpan="2"/>
+        <StackPanel HorizontalAlignment="Left"  Margin="21,319,0,0" Width="148" Height="64" VerticalAlignment="Top">
             <Button x:Name="ColorLinesButton" Content="Цвет линии" Click="ColorButton_Click"/>
+            <Button x:Name="ColorFillingButton" Content="Цвет Заливки" Click="ColorButton_Click"/>
 
 
         </StackPanel>
