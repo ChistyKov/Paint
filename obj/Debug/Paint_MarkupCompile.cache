@@ -4,15 +4,23 @@
 winexe
 C#
 .cs
+<<<<<<< HEAD
+C:\Users\Fikus\OneDrive\git\GitPaint\Paint\obj\Debug\
+=======
 C:\Users\Petruchio\Рабочий стол\ProjectPaint\Paint11\obj\Debug\
+>>>>>>> 1f7f7b50e3296eee04a8d003bb468d991d690657
 Paint
 none
 false
 DEBUG;TRACE
+<<<<<<< HEAD
+C:\Users\Fikus\OneDrive\git\GitPaint\Paint\App.xaml
+=======
 C:\Users\Petruchio\Рабочий стол\ProjectPaint\Paint11\App.xaml
+>>>>>>> 1f7f7b50e3296eee04a8d003bb468d991d690657
 1219584333
 
-19-507085176
+201205788546
 15767508510
 MainWindow.xaml;
 

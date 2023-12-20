@@ -67,6 +67,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ChangeColor\ChangeColor.cs" />
     <Compile Include="CursorPaint\Cursor.cs" />
     <Compile Include="Enum\ButtonEnum.cs" />
     <Compile Include="Erase\EraseClass.cs" />

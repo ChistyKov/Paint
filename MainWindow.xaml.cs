@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Ink;
 using System.Windows;
+using Paint.ChangeColor;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -30,12 +31,24 @@ namespace Paint
 
         public MainWindow()
         {
+<<<<<<< HEAD
+            InitializeComponent();          
+=======
             InitializeComponent();
             ChangeColor();
             //PaintWindow.ResizeMode = System.Windows.ResizeMode.NoResize;
 
+>>>>>>> 1f7f7b50e3296eee04a8d003bb468d991d690657
         }
+        bool IsDrawning = false;
+
+        bool Draw;
+
+        bool button;
+
         public int StrokeThick;
+<<<<<<< HEAD
+=======
         public Color wpfColor { get; set; }
         private void ColorButton_Click(object sender, RoutedEventArgs e)
         {
@@ -69,6 +82,7 @@ namespace Paint
 
 
 
+>>>>>>> 1f7f7b50e3296eee04a8d003bb468d991d690657
 
         CursorPaint1 CursorPaint = new CursorPaint1();
 
@@ -80,9 +94,27 @@ namespace Paint
 
         AllOblicks AllOblick;
 
-        Brush ColorFilling;
-        //Для удобства устанавливаем стандартный цвет линии
-        Brush ColorLines = new SolidColorBrush((Color)ColorConverter.ConvertFromString("Red"));
+        //выставлем стандартный цвет
+        Brush linecolor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("Red"));
+        Brush fillcolor;
+       
+        private void ColorButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button clickedButton = (Button)sender;          
+            if(clickedButton.Name == "ColorFillingButton")
+            {
+                fillcolor = FillingColor.ChangeColor(sender, e);
+            }
+            if(clickedButton.Name == "ColorLinesButton")
+            {
+                linecolor = CollorLine.ChangeColor(sender, e);
+            }
+        }
+
+
+
+        #region save
+
 
         private Microsoft.Win32.SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog();
 
@@ -110,6 +142,8 @@ namespace Paint
                 }
             }
         }
+
+        #endregion
 
         bool Addtext = false;
         private void TextBox_Click(object sender, RoutedEventArgs e)
@@ -143,16 +177,6 @@ namespace Paint
         }
 
 
-        // по сути выбор цвета тут
-        private void ChangeColor()
-        {
-            ColorFilling = new SolidColorBrush(wpfColor);
-        }
-
-        bool Draw;
-        bool button;
-
-
 
         private void Window_MouseLeftbuttonDown(object sender, MouseButtonEventArgs e)
         {
@@ -160,33 +184,34 @@ namespace Paint
             {
                 Mouse.Capture(MyCanvas);
                 IsDrawning = true;
-                CursorPaint.StartFigure(MyCanvas, e.GetPosition(MyCanvas), ColorLines);
+                CursorPaint.StartFigure(MyCanvas, e.GetPosition(MyCanvas), linecolor);
             }
-            if (Addtext)
-            {
-                // Проверяем, что клик был выполнен в Canvas
-                if (sender is Canvas canvas)
-                {
-                    Point clickedPoint = e.GetPosition(canvas);
 
-                    // Создаем TextBox
-                    TextBox textBox = new TextBox();
-                    textBox.Width = 100;
-                    textBox.Height = Double.NaN;
-                    textBox.FontSize = 12;
-                    textBox.AcceptsReturn = true;
-                    textBox.TextWrapping = TextWrapping.Wrap; // Чтобы поле могло расширяться
+            //if (Addtext)
+            //{
+            //    // Проверяем, что клик был выполнен в Canvas
+            //    if (sender is Canvas canvas)
+            //    {
+            //        Point clickedPoint = e.GetPosition(canvas);
 
-                    Canvas.SetLeft(textBox, clickedPoint.X);
-                    Canvas.SetTop(textBox, clickedPoint.Y);
+            //        // Создаем TextBox
+            //        TextBox textBox = new TextBox();
+            //        textBox.Width = 100;
+            //        textBox.Height = Double.NaN;
+            //        textBox.FontSize = 12;
+            //        textBox.AcceptsReturn = true;
+            //        textBox.TextWrapping = TextWrapping.Wrap; // Чтобы поле могло расширяться
 
-                    canvas.Children.Add(textBox);
+            //        Canvas.SetLeft(textBox, clickedPoint.X);
+            //        Canvas.SetTop(textBox, clickedPoint.Y);
 
-                    // Устанавливаем фокус на TextBox
-                    textBox.Focus();
-                }
-                Addtext = false;
-            }
+            //        canvas.Children.Add(textBox);
+
+            //        // Устанавливаем фокус на TextBox
+            //        textBox.Focus();
+            //    }
+            //    Addtext = false;
+            //}
 
             if (button)
             {
@@ -212,7 +237,6 @@ namespace Paint
                     BKH.TempCanvas.Children.Clear();
                 }
 
-
             }
 
             if (button)
@@ -221,7 +245,7 @@ namespace Paint
                 EndPoint = e.GetPosition(MyCanvas);
                 if (Oblick != null)
                 {
-                    Oblick.ShapeUpdeting(StrokeThick, MyCanvas, ColorLines, StartPoint, EndPoint, ColorFilling);
+                    Oblick.ShapeUpdeting(StrokeThick, MyCanvas, linecolor, StartPoint, EndPoint, fillcolor);
                     Oblick.UpdateFiqure();
                 }
                 BKH.TempCanvas.Children.Clear();
@@ -249,57 +273,7 @@ namespace Paint
             }
 
         }
-        #region button
-        private void Cursor_click(object sender, RoutedEventArgs e)
-        {
-            Draw = false;
-            button = false;
-            MyCanvas.EditingMode = InkCanvasEditingMode.None;
-        }
-
-        private void Paint_click(object sender, RoutedEventArgs e)
-        {
-
-            AllOblick = AllOblicks.Paint;
-            Draw = true;
-            button = false;
-        }
-
-        private void Cicle_click(object sender, RoutedEventArgs e)
-        {
-
-            AllOblick = AllOblicks.Circle;
-            Draw = false;
-            button = true;
-        }
-
-        private void Oval_click(object sender, RoutedEventArgs e)
-        {
-
-            AllOblick = AllOblicks.Oval;
-            Draw = false;
-            button = true;
-        }
-        private void Line_click(object sender, RoutedEventArgs e)
-        {
-            AllOblick = AllOblicks.Line;
-            Draw = false;
-            button = true;
-        }
-        private void Polygon_click(object sender, RoutedEventArgs e)
-        {
-        }
-        private void Rectangle_click(object sender, RoutedEventArgs e)
-        {
-            AllOblick = AllOblicks.Rectangle;
-            Draw = false;
-            button = true;
-        }
-        #endregion
-
-
-
-
+       
 
         private void Mode_Checked(object sender,RoutedEventArgs e)
         {
@@ -318,12 +292,18 @@ namespace Paint
                 Draw = true;
                 button = false;
             }
+            
             if (modeName.Equals("EaraseB"))
             { 
-                Draw = false;
+                Draw = true;
                 button = false;
                 AllOblick = AllOblicks.Paint;
+<<<<<<< HEAD
+            
+
+=======
                 MyCanvas.EditingModeInverted = InkCanvasEditingMode.EraseByPoint;
+>>>>>>> 1f7f7b50e3296eee04a8d003bb468d991d690657
             }
             if (modeName.Equals("RectangleB"))
             {
@@ -366,29 +346,8 @@ namespace Paint
 
             CursorPaint.Strokethik = (int)slider.Value;
             StrokeThick = (int)slider.Value;
-
-
-
-
-
         }
 
-        //ПРИКИНУТЬ КАК ЭТО СДЕЛАТЬ
-        //public void Select(System.Collections.Generic.IEnumerable<System.Windows.UIElement> selectedElemens)
-        //{
-
-        //}
-
-
-
-        #region Drawning
-
-
-        bool IsDrawning = false;
-
-
-
-        #endregion
 
     }
 }

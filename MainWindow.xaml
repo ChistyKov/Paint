@@ -15,8 +15,6 @@
     </Window.Background>
     <Grid >
 
-
-
         <InkCanvas x:Name="MyCanvas" Grid.Row="2" Background="White" EditingMode="None"
               
                MouseMove="Window_MouseMove" MouseLeftButtonDown="Window_MouseLeftbuttonDown" MouseLeftButtonUp="Window_MouseLeftButtonUp" Margin="362,34,50,34" >
@@ -34,6 +32,18 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Margin="10,0,0,0"
+<<<<<<< HEAD
+                />
+        <TextBox x:Name="txt_CanvasWidth"
+         HorizontalAlignment="Left" Margin="116,383,0,0" TextWrapping="Wrap" Text="512" VerticalAlignment="Top" Width="43" 
+          />
+
+        <Label Content="X" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="94,379,0,0"/>
+
+        <TextBox x:Name="txt_CanvasHeigh"
+        HorizontalAlignment="Left" Margin="46,383,0,0" TextWrapping="Wrap" Text="512" VerticalAlignment="Top" Width="43" 
+         />
+=======
                 
                 >
 
@@ -42,9 +52,10 @@
 
         </Border>
 
+>>>>>>> 1f7f7b50e3296eee04a8d003bb468d991d690657
 
         <StackPanel HorizontalAlignment="Left"  Margin="20,34,0,480" Width="169">
-            <Button x:Name="Save" Content="Saxe" Click="SaveButton_Click"/>
+            <Button x:Name="Save" Content="Save" Click="SaveButton_Click"/>
 
 
         </StackPanel>
