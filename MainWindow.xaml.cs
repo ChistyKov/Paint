@@ -16,8 +16,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Win32;
 using Paint.ChangeColor;
+using Paint.CanvasSize;
 using System.IO;
-
+using System.Text.RegularExpressions;
 
 
 namespace Paint
@@ -86,11 +87,7 @@ namespace Paint
             SaveCanvas.save(MyCanvas);
         }
 
-        bool Addtext = false;
-        private void TextBox_Click(object sender, RoutedEventArgs e)
-        {
-            Addtext = true;
-        }
+
 
 
         private ButtonKeyHandler BKH = new ButtonKeyHandler();
@@ -325,8 +322,15 @@ namespace Paint
 
         }
 
-       
-
+        private void txtOnlyDigit_PreviewInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+        private void txt_CanvasSize_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ChangeCanvasSize.CanvasSize(sender, MyCanvas);
+        }
 
 
         #region Drawning

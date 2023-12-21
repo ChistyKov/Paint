@@ -7,34 +7,44 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
+using System.Windows;
 
 namespace Paint
 {
     internal class SaveCanvas
     {
-        private static Microsoft.Win32.SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog();
         public static void save(InkCanvas inkCanvas)
         {
-            // Создание объекта RenderTargetBitmap с размерами канваса
-            RenderTargetBitmap renderTargetBitmap = new RenderTargetBitmap(
-                (int)inkCanvas.ActualWidth, (int)inkCanvas.ActualHeight, 96, 96, PixelFormats.Pbgra32);
+            inkCanvas.EditingMode = InkCanvasEditingMode.None;
+            Microsoft.Win32.SaveFileDialog savedialog = new Microsoft.Win32.SaveFileDialog();
+            savedialog.Title = "Сохранить картинку как...";
+            savedialog.FileName = "image";
+            savedialog.DefaultExt = ".png";
+            savedialog.OverwritePrompt = true;
+            savedialog.CheckPathExists = true;
+            savedialog.Filter = "Image (.png)|*.png";
 
-            // Рендеринг канваса в RenderTargetBitmap
-            renderTargetBitmap.Render(inkCanvas);
+            Nullable<bool> result = savedialog.ShowDialog();
 
-            // Создание объекта PngBitmapEncoder для сохранения изображения в формате PNG
-            PngBitmapEncoder pngEncoder = new PngBitmapEncoder();
-            pngEncoder.Frames.Add(BitmapFrame.Create(renderTargetBitmap));
-
-
-
-            saveFileDialog.Filter = "Picture files (*.png)|*.png|Picture files (*.jpg)|*.jpg|All files (*.*)|*.* ";
-            if (saveFileDialog.ShowDialog() == true)
+            if (result == true)
             {
-                using (FileStream fileStream = new FileStream(saveFileDialog.FileName, FileMode.Create))
+                string fileName = savedialog.FileName;
+
+                var size = new Size(inkCanvas.ActualWidth, inkCanvas.ActualHeight);
+                inkCanvas.Margin = new Thickness(0, 0, 0, 0);
+                inkCanvas.Measure(size);
+                inkCanvas.Arrange(new Rect(size));
+                var encoder = new PngBitmapEncoder();
+                var bitmapTarget = new RenderTargetBitmap((int)size.Width,
+                    (int)size.Height, 96, 96, PixelFormats.Default);
+                bitmapTarget.Render(inkCanvas);
+                using (FileStream fs = new FileStream(fileName, FileMode.Create))
                 {
-                    pngEncoder.Save(fileStream);
+                    encoder.Frames.Add(BitmapFrame.Create(bitmapTarget));
+                    encoder.Save(fs);
                 }
+                inkCanvas.Margin = new Thickness(234, 0, 0, 0);
+                inkCanvas.EditingMode = InkCanvasEditingMode.Ink;
             }
         }
     }
